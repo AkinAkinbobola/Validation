@@ -1,12 +1,13 @@
-let bf = document.getElementById("bal-bf").value.trim();
-let qty_pur = document.getElementById("qtyPur").value.trim();
-let prod_dim = document.getElementById("proDim").value.trim();
-(prod_dim ==="") ? prod_dim= "n/a": document.getElementById("proDim").value;
-let qty_pro = document.getElementById("qtyPro").value.trim();
-let cf = document.getElementById("bal-cf").value.trim();
-
-
 function evaluateMaterialBalanceBF(){
+    // Variable Declarations
+    let bf = document.getElementById("bal-bf").value.trim();
+    let qty_pur = document.getElementById("qtyPur").value.trim();
+    let prod_dim = document.getElementById("proDim").value.trim();
+    (prod_dim ==="") ? prod_dim= "n/a": document.getElementById("proDim").value;
+    let qty_pro = document.getElementById("qtyPro").value.trim();
+    let cf = document.getElementById("bal-cf").value.trim();
+
+
     // These are the tests
     const twoValues = /^\d+\s*([a-zA-z]+)\s*([a-zA-z]+)\s*\d+\s*([a-zA-z]+)$/;
     const oneValue = /^\d+\s*[a-zA-Z]+$/;
@@ -17,9 +18,10 @@ function evaluateMaterialBalanceBF(){
     let output;
     // Checking if BF is 0
     if(zero.test(bf)){
+
         // Checking if both BF and QtyPurchased are both zero
         if(zero.test(qty_pur)){
-            error_message += "You cannot have 0 BF and 0 Quantity to be purchased\n";
+            // error_message += "You cannot have 0 BF and 0 Quantity to be purchased\n";
         }
         // If they are both not zero
         else{// Checking what pattern qty purchased matches
@@ -31,7 +33,7 @@ function evaluateMaterialBalanceBF(){
                 let qtyPurWords = qty_pur.match(/[a-z]+/ig);
                 // Checking if product dimension is n/a
                 if(prod_dim === "n/a"){
-                    error_message += "Product dimension cannot be empty";
+                    // error_message += "Product dimension cannot be empty";
                 }else{
 
                     if(twoValues.test(prod_dim)){
@@ -43,11 +45,10 @@ function evaluateMaterialBalanceBF(){
                             // Checking if their words are equal
                             if(arraysEqual(qtyPurWords, proDimWords)){
                                 if(noUnit.test(qty_pro)){
-
                                     let qtyProValues = qty_pro.match(/\d+/g);
                                     let calc = (parseInt(qtyPurValues[1])) - (parseInt(proDimValues[1]) * parseInt(qtyProValues[0]));
                                     if(calc < 0){
-                                        error_message += "Negative Output Detected";
+                                        output = 0;
                                     }else if (calc === 0){
                                         output = `0`;
                                     }
@@ -57,13 +58,13 @@ function evaluateMaterialBalanceBF(){
                                     }
 
                                 }else{
-                                    error_message += "Unit Mismatch\n";
+                                    // error_message += "Unit Mismatch\n";
                                 }
                             }else{
-                                error_message += "Unit Mismatch\n";
+                                // error_message += "Unit Mismatch\n";
                             }
                         }else{
-                            error_message +="Invalid";
+                            // error_message +="Invalid";
                         }
 
                     }
@@ -82,7 +83,7 @@ function evaluateMaterialBalanceBF(){
                         let qtyProValues = qty_pro.match(/\d+/g);
                         let calc = (parseInt(qtyPurValues[0])) - ((1) * parseInt(qtyProValues[0]));
                         if(calc <= 0){
-                            error_message += "Negative Output";
+                            // error_message += "Negative Output";
                         }else{
                             output = `${calc} ${qtyPurWords[0]}`;
                         }
@@ -93,22 +94,22 @@ function evaluateMaterialBalanceBF(){
                         if(arraysEqual(qtyPurWords, qtyProWords)){
                             let calc = (parseInt(qtyPurValues[0])) - ((1) * parseInt(qtyProValues[0]));
                             if(calc <= 0){
-                                error_message += "Invalid";
+                                // error_message += "Invalid";
                             }else{
                                 output = `${calc} ${qtyPurWords[0]}`;
                             }
 
                         }else{
-                            error_message += "Unit Mismatch\n";
+                            // error_message += "Unit Mismatch\n";
                         }
                     }
                     else{
-                        error_message += "Invalid Quantity to be Produced\n";
+                        // error_message += "Invalid Quantity to be Produced\n";
                     }
 
 
                 }else{
-                    error_message += "Invalid Product Dimension";
+                    // error_message += "Invalid Product Dimension";
                 }
             }
             // If it matches the No units pattern
@@ -120,19 +121,19 @@ function evaluateMaterialBalanceBF(){
                         let qtyProValues = qty_pro.match(/\d+/g);
                         let calc = (parseInt(qtyPurValues[0])) - ((1) * parseInt(qtyProValues[0]));
                         if(calc <= 0){
-                            error_message += "Negative Output";
+                            // error_message += "Negative Output";
                         }else{
                             output = `${calc}`;
                         }
 
                     }
                     else{
-                        error_message += "Invalid Quantity to be Produced\n";
+                        // error_message += "Invalid Quantity to be Produced\n";
                     }
 
 
                 }else{
-                    error_message += "Invalid Product Dimension";
+                    // error_message += "Invalid Product Dimension";
                 }
             }
         }
@@ -146,7 +147,7 @@ function evaluateMaterialBalanceBF(){
         if(zero.test(qty_pur)){
             if(twoValues.test(prod_dim)){
                 if(prod_dim === "n/a"){
-                    error_message += "Product dimension cannot be empty";
+                    // error_message += "Product dimension cannot be empty";
                 }else{
 
                     if(twoValues.test(prod_dim)){
@@ -160,19 +161,19 @@ function evaluateMaterialBalanceBF(){
                                     let qtyProValues = qty_pro.match(/\d+/g);
                                     let calc = (parseInt(BFValues[1])) - (parseInt(proDimValues[1]) * parseInt(qtyProValues[0]));
                                     if(calc <= 0){
-                                        error_message += "Invalid";
+                                        output = 0;
                                     }else{
                                         output = `${BFValues[0]} ${BFWords[0]} ${BFWords[1]} ${calc} ${BFWords[2]}`;
                                     }
 
                                 }else{
-                                    error_message += "Unit Mismatch\n";
+                                    // error_message += "Unit Mismatch\n";
                                 }
                             }else{
-                                error_message += "Unit Mismatch\n";
+                                // error_message += "Unit Mismatch\n";
                             }
                         }else{
-                            error_message +="Invalid";
+                            // error_message +="Invalid";
                         }
 
                     }
@@ -192,7 +193,7 @@ function evaluateMaterialBalanceBF(){
                     // Checking if product dimension is n/a
                     if(BFValues[0] === qtyPurValues[0]){
                         if(prod_dim === "n/a"){
-                            error_message += "Product dimension cannot be empty";
+                            // error_message += "Product dimension cannot be empty";
                         }else{
 
                             if(twoValues.test(prod_dim)){
@@ -206,7 +207,7 @@ function evaluateMaterialBalanceBF(){
                                             let qtyProValues = qty_pro.match(/\d+/g);
                                             let calc = (parseInt(BFValues[1]) +parseInt(qtyPurValues[1])) - (parseInt(proDimValues[1]) * parseInt(qtyProValues[0]));
                                             if(calc < 0){
-                                                error_message += "Negative Output Detected";
+                                                output = 0;
                                             }else if (calc === 0){
                                                 output = `0`;
                                             }else{
@@ -214,13 +215,13 @@ function evaluateMaterialBalanceBF(){
                                             }
 
                                         }else{
-                                            error_message += "Unit Mismatch\n";
+                                            // error_message += "Unit Mismatch\n";
                                         }
                                     }else{
-                                        error_message += "Unit Mismatch\n";
+                                        // error_message += "Unit Mismatch\n";
                                     }
                                 }else{
-                                    error_message +="Invalid";
+                                    // error_message +="Invalid";
                                 }
 
                             }
@@ -229,7 +230,7 @@ function evaluateMaterialBalanceBF(){
                     }
 
                 }else{
-                    error_message += "Units Mismatch\n";
+                    // error_message += "Units Mismatch\n";
                 }
 
 
@@ -252,7 +253,7 @@ function evaluateMaterialBalanceBF(){
                     if (arraysEqual(BFWords, qtyProWords)){
                         let calc = (parseInt(BFValues[0])) - (parseInt(qtyProValues[0]));
                         if(calc < 0){
-                            error_message += "Negative Output Detected";
+                            output = 0;
                         }else if (calc === 0){
                             output = `0`;
                         }else{
@@ -263,21 +264,21 @@ function evaluateMaterialBalanceBF(){
                     let qtyProValues = qty_pro.match(/\d+/g);
                     let calc = (parseInt(BFValues[0])) - (parseInt(qtyProValues[0]));
                     if(calc <= 0){
-                        error_message += "Negative Output Detected";
+                        // error_message += "Negative Output Detected";
                     }else{
                         output = `${calc} ${BFWords}`;
                     }
 
                 }else{
-                    error_message += "Invalid\n";
+                    // error_message += "Invalid\n";
                 }
             }else{
-                error_message += "Invalid Product Dimension\n";
+                // error_message += "Invalid Product Dimension\n";
             }
 
 
         }else{
-            error_message += "Invalid\n";
+            // error_message += "Invalid\n";
         }
 
     }
@@ -292,7 +293,7 @@ function evaluateMaterialBalanceBF(){
                         let qtyProValues = qty_pro.match(/\d+/g);
                         let calc = (parseInt(BFValues[0])) - (qtyProValues[0]);
                         if(calc < 0){
-                            error_message += "Negative Output Detected";
+                            output = 0;
                         }else if (calc === 0){
                             output = `0`;
                         }else{
@@ -305,11 +306,11 @@ function evaluateMaterialBalanceBF(){
 
     }
 
-    if(error_message === ""){
+    if(output){
         document.getElementById("bal-cf").value = output;
     }else{
         console.log(error_message);
-        document.getElementById("bal-cf").value = error_message;
+        document.getElementById("bal-cf").value = "error";
     }
 
 
@@ -324,4 +325,16 @@ function arraysEqual(a, b) {
     }
     return true;
 }
-evaluateMaterialBalanceBF();
+
+let btn = document.getElementById("btn");
+let clear = document.getElementById("clear");
+
+btn.addEventListener("click", evaluateMaterialBalanceBF);
+
+clear.addEventListener("click", () =>{
+    document.getElementById("bal-bf").value = "";
+    document.getElementById("bal-cf").value = "";
+    document.getElementById("proDim").value = "";
+    document.getElementById("qtyPro").value = "";
+    document.getElementById("qtyPur").value = "";
+})
