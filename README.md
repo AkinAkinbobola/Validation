@@ -1,7 +1,7 @@
 # Validation
 Form Validation
 
-This is a form that the formula : Material Bal CF = (Material Bal BF + Qty to be purchased) - (Production Dimension * Quantity to be produced)
+This is a form that uses the formula => Material Bal CF = (Material Bal BF + Qty to be purchased) - (Production Dimension * Quantity to be produced)
 
 To calculate it's results. There are various validation checks using Regular Expressions
 Some examples:
