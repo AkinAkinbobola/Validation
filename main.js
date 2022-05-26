@@ -1,3 +1,20 @@
+function Empty() {
+    let forms = [...document.querySelectorAll(".form-control")].slice(0, 4);
+    return forms.every(form => form.value.trim() === "");
+}
+
+function arraysEqual(a, b) {
+    if (a === b) return true;
+    if (a == null || b == null) return false;
+    if (a.length !== b.length) return false;
+
+    for (let i = 0; i < a.length; ++i) {
+        if (a[i] !== b[i]) return false;
+    }
+    return true;
+}
+
+
 function evaluateMaterialBalanceBF(){
     // Variable Declarations
     let bf = document.getElementById("bal-bf").value.trim();
@@ -5,7 +22,6 @@ function evaluateMaterialBalanceBF(){
     let prod_dim = document.getElementById("proDim").value.trim();
     (prod_dim ==="") ? prod_dim= "n/a": document.getElementById("proDim").value;
     let qty_pro = document.getElementById("qtyPro").value.trim();
-    let cf = document.getElementById("bal-cf").value.trim();
 
 
     // These are the tests
@@ -16,12 +32,13 @@ function evaluateMaterialBalanceBF(){
 
     let error_message = "";
     let output;
+
     // Checking if BF is 0
     if(zero.test(bf)){
 
         // Checking if both BF and QtyPurchased are both zero
         if(zero.test(qty_pur)){
-            // error_message += "You cannot have 0 BF and 0 Quantity to be purchased\n";
+
         }
         // If they are both not zero
         else{// Checking what pattern qty purchased matches
@@ -33,7 +50,7 @@ function evaluateMaterialBalanceBF(){
                 let qtyPurWords = qty_pur.match(/[a-z]+/ig);
                 // Checking if product dimension is n/a
                 if(prod_dim === "n/a"){
-                    // error_message += "Product dimension cannot be empty";
+
                 }else{
 
                     if(twoValues.test(prod_dim)){
@@ -58,13 +75,13 @@ function evaluateMaterialBalanceBF(){
                                     }
 
                                 }else{
-                                    // error_message += "Unit Mismatch\n";
+
                                 }
                             }else{
-                                // error_message += "Unit Mismatch\n";
+
                             }
                         }else{
-                            // error_message +="Invalid";
+
                         }
 
                     }
@@ -83,7 +100,7 @@ function evaluateMaterialBalanceBF(){
                         let qtyProValues = qty_pro.match(/\d+/g);
                         let calc = (parseInt(qtyPurValues[0])) - ((1) * parseInt(qtyProValues[0]));
                         if(calc <= 0){
-                            // error_message += "Negative Output";
+
                         }else{
                             output = `${calc} ${qtyPurWords[0]}`;
                         }
@@ -94,22 +111,22 @@ function evaluateMaterialBalanceBF(){
                         if(arraysEqual(qtyPurWords, qtyProWords)){
                             let calc = (parseInt(qtyPurValues[0])) - ((1) * parseInt(qtyProValues[0]));
                             if(calc <= 0){
-                                // error_message += "Invalid";
+
                             }else{
                                 output = `${calc} ${qtyPurWords[0]}`;
                             }
 
                         }else{
-                            // error_message += "Unit Mismatch\n";
+
                         }
                     }
                     else{
-                        // error_message += "Invalid Quantity to be Produced\n";
+
                     }
 
 
                 }else{
-                    // error_message += "Invalid Product Dimension";
+
                 }
             }
             // If it matches the No units pattern
@@ -121,19 +138,19 @@ function evaluateMaterialBalanceBF(){
                         let qtyProValues = qty_pro.match(/\d+/g);
                         let calc = (parseInt(qtyPurValues[0])) - ((1) * parseInt(qtyProValues[0]));
                         if(calc <= 0){
-                            // error_message += "Negative Output";
+
                         }else{
                             output = `${calc}`;
                         }
 
                     }
                     else{
-                        // error_message += "Invalid Quantity to be Produced\n";
+
                     }
 
 
                 }else{
-                    // error_message += "Invalid Product Dimension";
+
                 }
             }
         }
@@ -147,7 +164,7 @@ function evaluateMaterialBalanceBF(){
         if(zero.test(qty_pur)){
             if(twoValues.test(prod_dim)){
                 if(prod_dim === "n/a"){
-                    // error_message += "Product dimension cannot be empty";
+
                 }else{
 
                     if(twoValues.test(prod_dim)){
@@ -167,13 +184,13 @@ function evaluateMaterialBalanceBF(){
                                     }
 
                                 }else{
-                                    // error_message += "Unit Mismatch\n";
+
                                 }
                             }else{
-                                // error_message += "Unit Mismatch\n";
+
                             }
                         }else{
-                            // error_message +="Invalid";
+
                         }
 
                     }
@@ -193,7 +210,7 @@ function evaluateMaterialBalanceBF(){
                     // Checking if product dimension is n/a
                     if(BFValues[0] === qtyPurValues[0]){
                         if(prod_dim === "n/a"){
-                            // error_message += "Product dimension cannot be empty";
+
                         }else{
 
                             if(twoValues.test(prod_dim)){
@@ -215,13 +232,13 @@ function evaluateMaterialBalanceBF(){
                                             }
 
                                         }else{
-                                            // error_message += "Unit Mismatch\n";
+
                                         }
                                     }else{
-                                        // error_message += "Unit Mismatch\n";
+
                                     }
                                 }else{
-                                    // error_message +="Invalid";
+
                                 }
 
                             }
@@ -230,7 +247,7 @@ function evaluateMaterialBalanceBF(){
                     }
 
                 }else{
-                    // error_message += "Units Mismatch\n";
+
                 }
 
 
@@ -264,21 +281,21 @@ function evaluateMaterialBalanceBF(){
                     let qtyProValues = qty_pro.match(/\d+/g);
                     let calc = (parseInt(BFValues[0])) - (parseInt(qtyProValues[0]));
                     if(calc <= 0){
-                        // error_message += "Negative Output Detected";
+
                     }else{
                         output = `${calc} ${BFWords}`;
                     }
 
                 }else{
-                    // error_message += "Invalid\n";
+
                 }
             }else{
-                // error_message += "Invalid Product Dimension\n";
+
             }
 
 
         }else{
-            // error_message += "Invalid\n";
+
         }
 
     }
@@ -305,36 +322,28 @@ function evaluateMaterialBalanceBF(){
         }
 
     }
-
-    if(output){
+    if(Empty()){
+        document.getElementById("bal-cf").value = "ERROR! Enter Values.";
+    }else if(output){
         document.getElementById("bal-cf").value = output;
     }else{
-        console.log(error_message);
-        document.getElementById("bal-cf").value = "error";
+        document.getElementById("bal-cf").value = "ERROR! Verify your units match or values are correct.";
     }
 
 
 }
-function arraysEqual(a, b) {
-    if (a === b) return true;
-    if (a == null || b == null) return false;
-    if (a.length !== b.length) return false;
 
-    for (let i = 0; i < a.length; ++i) {
-        if (a[i] !== b[i]) return false;
-    }
-    return true;
-}
+
 
 let btn = document.getElementById("btn");
 let clear = document.getElementById("clear");
 
+
+
+
 btn.addEventListener("click", evaluateMaterialBalanceBF);
 
 clear.addEventListener("click", () =>{
-    document.getElementById("bal-bf").value = "";
-    document.getElementById("bal-cf").value = "";
-    document.getElementById("proDim").value = "";
-    document.getElementById("qtyPro").value = "";
-    document.getElementById("qtyPur").value = "";
-})
+    let forms = document.querySelectorAll(".form-control");
+    forms.forEach(form => form.value = "");
+});
